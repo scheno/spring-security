@@ -1,0 +1,26 @@
+@startuml
+
+interface AuthorizationServerConfigurer {
+    +{abstract} void configure(AuthorizationServerSecurityConfigurer security)
+    +{abstract} void configure(ClientDetailsServiceConfigurer clients)
+    +{abstract} void configure(AuthorizationServerEndpointsConfigurer endpoints)
+}
+
+class AuthorizationServerConfigurerAdapter {
+    +void configure(AuthorizationServerSecurityConfigurer security)
+    +void configure(ClientDetailsServiceConfigurer clients)
+    +void configure(AuthorizationServerEndpointsConfigurer endpoints)
+
+}
+
+class AuthorizationServer {
+    +void configure(AuthorizationServerSecurityConfigurer security)
+    +void configure(ClientDetailsServiceConfigurer clients)
+    +void configure(AuthorizationServerEndpointsConfigurer endpoints)
+
+}
+
+AuthorizationServerConfigurer <|.. AuthorizationServerConfigurerAdapter
+AuthorizationServerConfigurerAdapter <|-- AuthorizationServer
+
+@enduml
