@@ -6,10 +6,25 @@ interface AuthorizationServerConfigurer {
     +{abstract} void configure(AuthorizationServerEndpointsConfigurer endpoints)
 }
 
+interface AuthorizationServerTokenServices {
+    +{abstract} OAuth2AccessToken createAccessToken(OAuth2Authentication var1)
+    +{abstract} OAuth2AccessToken refreshAccessToken(String var1, TokenRequest var2)
+    +{abstract} OAuth2AccessToken getAccessToken(OAuth2Authentication var1)
+}
+
+interface ResourceServerConfigurer {
+    +{abstract} void configure(ResourceServerSecurityConfigurer resources)
+    +{abstract} void configure(HttpSecurity http) throws Exception
+}
+
 class AuthorizationServerConfigurerAdapter {
     +void configure(AuthorizationServerSecurityConfigurer security)
     +void configure(ClientDetailsServiceConfigurer clients)
     +void configure(AuthorizationServerEndpointsConfigurer endpoints)
+
+}
+
+class DefaultTokenServices {
 
 }
 
@@ -20,7 +35,17 @@ class AuthorizationServer {
 
 }
 
+class ResourceServerConfigurerAdapter {
+
+}
+
 AuthorizationServerConfigurer <|.. AuthorizationServerConfigurerAdapter
 AuthorizationServerConfigurerAdapter <|-- AuthorizationServer
+
+ResourceServerConfigurer <|.. ResourceServerConfigurerAdapter
+
+AuthorizationServerTokenServices <|.. DefaultTokenServices
+
+
 
 @enduml

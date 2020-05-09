@@ -22,7 +22,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
 //                .antMatchers("/r/r1").hasAuthority("p2")
 //                .antMatchers("/r/r2").hasAuthority("p2")
-                .antMatchers("/r/**").authenticated()//所有/r/**的请求必须认证通过
+                //所有/r/**的请求必须认证通过
+                .antMatchers("/r/**").authenticated()
                 .anyRequest().permitAll()//除了/r/**，其它的请求可以访问
         ;
 

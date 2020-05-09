@@ -10,7 +10,7 @@ activate AuthenticationManager #FFBBBB
 AuthenticationManager -> DaoAuthenticationProvider : 4.委托认证authenticate()
 activate DaoAuthenticationProvider #FFBBBB
 
-DaoAuthenticationProvider -> UserDetailsService : 5.获取用户信息，\n loadUserByUsername
+DaoAuthenticationProvider -> UserDetailsService : 5.获取用户信息，\n loadUserByUsername()
 activate UserDetailsService #FFBBBB
 
 UserDetailsService --> DaoAuthenticationProvider : 6.返回UserDetails

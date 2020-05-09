@@ -1,5 +1,6 @@
 package com.anonymous.security.order.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.anonymous.security.order.model.UserDTO;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,12 +15,26 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class OrderController {
 
-    @GetMapping(value = "/r1")
-    @PreAuthorize("hasAuthority('p1')")//拥有p1权限方可访问此url
+    /**
+     * 拥有p1权限方可访问此url
+     * @return
+     */
+    @GetMapping(value = "/r/r1")
+    @PreAuthorize("hasAuthority('p1')")
     public String r1(){
         //获取用户身份信息
-        UserDTO  userDTO = (UserDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return userDTO.getFullname()+"访问资源1";
+        Object object = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        // UserDTO  userDTO = JSONObject.parseObject(object.toString(), UserDTO.class);
+        return object.toString() + "访问资源1";
+    }
+
+    @GetMapping(value = "/r/r5")
+    @PreAuthorize("hasAuthority('p8')")
+    public String r5() {
+        //获取用户身份信息
+        Object object = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDTO  userDTO = JSONObject.parseObject(object.toString(), UserDTO.class);
+        return userDTO.getFullname()+"访问资源5";
     }
 
 }
