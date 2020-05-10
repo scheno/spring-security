@@ -1,0 +1,18 @@
+@startuml
+
+'实现
+javax.servlet.Filter ()-- FilterChainProxy : Realization
+
+'组合
+FilterChainProxy *-- SecurityFilterChain : Composition
+
+'聚合
+SecurityFilterChain o-- SecurityContextPersistenceFilter : Aggregation
+SecurityFilterChain o-- UsernamePasswordAuthenticationFilter : Aggregation
+SecurityFilterChain o-- OAuth2AuthenticationProcessingFilter : Aggregation
+
+'依赖
+OAuth2AuthenticationProcessingFilter ..> AccessDecisionManager : Dependency
+OAuth2AuthenticationProcessingFilter ..> AuthorizationManager : Dependency
+
+@enduml

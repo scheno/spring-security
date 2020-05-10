@@ -1,0 +1,23 @@
+@startuml
+
+-> FilterSecurityInterceptor : 1.认证后的用户访问受保护资源
+
+activate FilterSecurityInterceptor #FFBBBB
+FilterSecurityInterceptor -> SecurityMetadataSource : 2.获取访问当前资源所需要的权限\nSecurityMetadataSource.getAttributes()
+
+activate SecurityMetadataSource #FFBBBB
+SecurityMetadataSource --> FilterSecurityInterceptor : 3.返回Collection<ConfigAttribute>
+deactivate SecurityMetadataSource
+
+FilterSecurityInterceptor -> AccessDecisionManager : 4.授权决策AccessDecisionManager.decide()
+
+activate AccessDecisionManager #FFBBBB
+AccessDecisionManager -> AccessDecisionManager : 5.投票决策
+
+
+AccessDecisionManager --> FilterSecurityInterceptor : 6.决策通过
+deactivate AccessDecisionManager
+
+FilterSecurityInterceptor -> FilterSecurityInterceptor : 7.允许访问资源，请求放行
+
+@enduml

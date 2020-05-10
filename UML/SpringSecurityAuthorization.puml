@@ -1,0 +1,21 @@
+@startuml
+
+interface AccessDecisionVoter
+interface AccessDecisionManager
+abstract AbstractAccessDecisionManager
+
+AccessDecisionManager <|.. AbstractAccessDecisionManager
+
+AbstractAccessDecisionManager <|-- AffirmativeBased
+AbstractAccessDecisionManager <|-- ConsensusBased
+AbstractAccessDecisionManager <|-- UnanimousBased
+
+AbstractAccessDecisionManager *- AccessDecisionVoter
+
+AccessDecisionVoter <|.. RoleVoter
+AccessDecisionVoter <|.. AuthenticatedVoter
+AccessDecisionVoter <|.. WebExpressionVoter
+
+
+
+@enduml

@@ -1,24 +1,28 @@
 @startuml
 
 -> UsernamePasswordAuthenticationFilter : 1.用户提交用户名、密码
-activate UsernamePasswordAuthenticationFilter #FFBBBB
 
+activate UsernamePasswordAuthenticationFilter #FFBBBB
 UsernamePasswordAuthenticationFilter -> UsernamePasswordAuthenticationFilter : 2.将请求信息封装为Authentication，\n实现类为UsernamePasswordAuthenticationToken
 UsernamePasswordAuthenticationFilter -> AuthenticationManager : 3.认证authenticate()
 activate AuthenticationManager #FFBBBB
 
 AuthenticationManager -> DaoAuthenticationProvider : 4.委托认证authenticate()
+deactivate AuthenticationManager
+
 activate DaoAuthenticationProvider #FFBBBB
-
 DaoAuthenticationProvider -> UserDetailsService : 5.获取用户信息，\n loadUserByUsername()
-activate UserDetailsService #FFBBBB
 
+activate UserDetailsService #FFBBBB
 UserDetailsService --> DaoAuthenticationProvider : 6.返回UserDetails
+deactivate UserDetailsService
 
 DaoAuthenticationProvider -> DaoAuthenticationProvider : 7.通过PasswordEncoder对比UserDetails\n中的密码与Authentication中密码是否一致
 DaoAuthenticationProvider -> DaoAuthenticationProvider : 8.填充Authentication，如权限信息
 DaoAuthenticationProvider --> UsernamePasswordAuthenticationFilter : 9.返回Authentication
+deactivate DaoAuthenticationProvider
 
+activate SecurityContextHolder #FFBBBB
 UsernamePasswordAuthenticationFilter -> SecurityContextHolder : 10.通过SecurityContextHolder.getContext().setAuthentication(...)方法将authentication保存至安全上下文
 
 

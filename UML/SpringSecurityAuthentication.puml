@@ -1,18 +1,25 @@
 @startuml
 
-'实现
-javax.servlet.Filter ()-- FilterChainProxy : Realization
+interface AuthenticationManager
 
-'组合
-FilterChainProxy *-- SecurityFilterChain : Composition
+class ProviderManager
 
-'聚合
-SecurityFilterChain o-- SecurityContextPersistenceFilter : Aggregation
-SecurityFilterChain o-- UsernamePasswordAuthenticationFilter : Aggregation
-SecurityFilterChain o-- XxxInterceptor : Aggregation
+class DaoAuthenticationProvider
+class XxxAuthenticationProvider
 
-'依赖
-XxxInterceptor ..> AccessDecisionManager : Dependency
-XxxInterceptor ..> AuthorizationManager : Dependency
+class XxxUserDetailsService
+
+AuthenticationManager <|.. ProviderManager
+
+ProviderManager o-- DaoAuthenticationProvider
+ProviderManager o-- XxxAuthenticationProvider
+
+
+DaoAuthenticationProvider ..|> AuthenticationProvider
+XxxAuthenticationProvider ..|> AuthenticationProvider
+
+XxxUserDetailsService -o DaoAuthenticationProvider
+XxxUserDetailsService ..|> UserDetailsService
+
 
 @enduml
